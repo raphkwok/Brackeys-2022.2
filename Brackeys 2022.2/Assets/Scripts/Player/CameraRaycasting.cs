@@ -26,14 +26,7 @@ public class CameraRaycasting : MonoBehaviour
             currentTarget.OnInteract();
         }
     }
-    /**
-    public void OnLook(InputValue value)
-    {
 
-        mouseInput = value.Get<Vector2>() * new Vector2(Screen.width, Screen.height);
-
-    }
-    **/
     private void Update()
     {
         RaycastForInteractables();
