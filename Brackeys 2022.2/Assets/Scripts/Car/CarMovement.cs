@@ -5,59 +5,59 @@ using UnityEngine.InputSystem;
 
 public class CarMovement : MonoBehaviour
 {
-	private Vector2 playerInput;
-	private float wheelAngle;
+    private Vector2 playerInput;
+    private float wheelAngle;
 
-	public WheelCollider frontDriverW, frontPassengerW;
-	public WheelCollider rearDriverW, rearPassengerW;
-	public Transform frontDriverT, frontPassengerT;
-	public Transform rearDriverT, rearPassengerT;
-	public float maxSteerAngle = 30;
-	public float speed = 50;
+    public WheelCollider frontDriverW, frontPassengerW;
+    public WheelCollider rearDriverW, rearPassengerW;
+    public Transform frontDriverT, frontPassengerT;
+    public Transform rearDriverT, rearPassengerT;
+    public float maxSteerAngle = 30;
+    public float speed = 50;
 
-	public void OnMovement(InputValue value)
+    public void OnMovement(InputValue value)
     {
-		playerInput = value.Get<Vector2>();
+        playerInput = value.Get<Vector2>();
     }
 
-	private void FixedUpdate()
-	{
-		print(playerInput);
-		
-		Steer();
-		Accelerate();
-		UpdateWheelPoses();
-	}
+    private void FixedUpdate()
+    {
+        print(playerInput);
 
-	private void Steer()
-	{
-		wheelAngle = maxSteerAngle * playerInput.x;
-		frontDriverW.steerAngle = wheelAngle;
-		frontPassengerW.steerAngle = wheelAngle;
-	}
+        Steer();
+        Accelerate();
+        UpdateWheelPoses();
+    }
 
-	private void Accelerate()
-	{
-		frontDriverW.motorTorque = playerInput.y * speed;
-		frontPassengerW.motorTorque = playerInput.y * speed;
-	}
+    private void Steer()
+    {
+        wheelAngle = maxSteerAngle * playerInput.x;
+        frontDriverW.steerAngle = wheelAngle;
+        frontPassengerW.steerAngle = wheelAngle;
+    }
 
-	private void UpdateWheelPoses()
-	{
-		UpdateWheelPose(frontDriverW, frontDriverT);
-		UpdateWheelPose(frontPassengerW, frontPassengerT);
-		UpdateWheelPose(rearDriverW, rearDriverT);
-		UpdateWheelPose(rearPassengerW, rearPassengerT);
-	}
+    private void Accelerate()
+    {
+        frontDriverW.motorTorque = playerInput.y * speed;
+        frontPassengerW.motorTorque = playerInput.y * speed;
+    }
 
-	private void UpdateWheelPose(WheelCollider collider, Transform wheel)
-	{
-		Vector3 pos = wheel.position;
-		Quaternion quat = wheel.rotation;
+    private void UpdateWheelPoses()
+    {
+        UpdateWheelPose(frontDriverW, frontDriverT);
+        UpdateWheelPose(frontPassengerW, frontPassengerT);
+        UpdateWheelPose(rearDriverW, rearDriverT);
+        UpdateWheelPose(rearPassengerW, rearPassengerT);
+    }
 
-		collider.GetWorldPose(out pos, out quat);
+    private void UpdateWheelPose(WheelCollider collider, Transform wheel)
+    {
+        Vector3 pos = wheel.position;
+        Quaternion quat = wheel.rotation;
 
-		wheel.position = pos;
-		wheel.rotation = quat;
-	}
+        collider.GetWorldPose(out pos, out quat);
+
+        wheel.position = pos;
+        wheel.rotation = quat;
+    }
 }
