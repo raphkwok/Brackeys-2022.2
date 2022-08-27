@@ -18,6 +18,10 @@ public class CarMovement : MonoBehaviour
     public float speed = 1200;
     public float brakeStrength = 1800;
 
+
+    //Extras
+    [SerializeField] private GameObject steeringWheel;
+
     public void OnMovement(InputValue value)
     {
         playerInput = value.Get<Vector2>();
@@ -46,11 +50,11 @@ public class CarMovement : MonoBehaviour
         {
             collider.brakeTorque = 0f;
         }
-
     }
 
     private void FixedUpdate()
     {
+        
         Steer();
         Accelerate();
         UpdateWheelPoses();
@@ -59,6 +63,10 @@ public class CarMovement : MonoBehaviour
     private void Steer()
     {
         wheelAngle = Mathf.MoveTowards(wheelAngle, maxSteerAngle * playerInput.x, Time.deltaTime * steerSpeed);
+        steeringWheel.transform.localEulerAngles = Vector3.forward * -wheelAngle * 1.5f;
+        print(steeringWheel.transform.rotation);
+
+
         frontDriverW.steerAngle = wheelAngle;
         frontPassengerW.steerAngle = wheelAngle;
     }
