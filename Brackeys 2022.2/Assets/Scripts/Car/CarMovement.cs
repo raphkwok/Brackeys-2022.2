@@ -7,23 +7,50 @@ public class CarMovement : MonoBehaviour
 {
     private Vector2 playerInput;
     private float wheelAngle;
+    private bool braking;
 
     public WheelCollider frontDriverW, frontPassengerW;
     public WheelCollider rearDriverW, rearPassengerW;
     public Transform frontDriverT, frontPassengerT;
     public Transform rearDriverT, rearPassengerT;
     public float maxSteerAngle = 30;
-    public float speed = 50;
+    public float steerSpeed = 70;
+    public float speed = 1200;
+    public float brakeStrength = 1800;
 
     public void OnMovement(InputValue value)
     {
         playerInput = value.Get<Vector2>();
     }
 
+    public void OnBrake(InputValue value)
+    {
+        braking = true;
+        Brake(frontDriverW);
+        Brake(frontPassengerW);
+    }
+
+    public void OnAccelerate(InputValue value)
+    {
+        braking = false;
+        Brake(frontDriverW);
+        Brake(frontPassengerW);
+    }
+
+    private void Brake(WheelCollider collider)
+    {
+        if (braking)
+        {
+            collider.brakeTorque = brakeStrength;
+        } else
+        {
+            collider.brakeTorque = 0f;
+        }
+
+    }
+
     private void FixedUpdate()
     {
-        print(playerInput);
-
         Steer();
         Accelerate();
         UpdateWheelPoses();
@@ -31,15 +58,19 @@ public class CarMovement : MonoBehaviour
 
     private void Steer()
     {
-        wheelAngle = maxSteerAngle * playerInput.x;
+        wheelAngle = Mathf.MoveTowards(wheelAngle, maxSteerAngle * playerInput.x, Time.deltaTime * steerSpeed);
         frontDriverW.steerAngle = wheelAngle;
         frontPassengerW.steerAngle = wheelAngle;
     }
 
     private void Accelerate()
     {
+        /**
         frontDriverW.motorTorque = playerInput.y * speed;
         frontPassengerW.motorTorque = playerInput.y * speed;
+        **/
+        frontDriverW.motorTorque = speed;
+        frontPassengerW.motorTorque = speed;
     }
 
     private void UpdateWheelPoses()
