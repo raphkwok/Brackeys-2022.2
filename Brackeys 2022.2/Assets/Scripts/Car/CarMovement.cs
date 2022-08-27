@@ -58,6 +58,6 @@ public class CarMovement : MonoBehaviour
         collider.GetWorldPose(out pos, out quat);
 
         wheel.position = pos;
-        wheel.rotation = quat;
+        wheel.rotation = quat * Quaternion.Euler(Vector3.right * 90f);
     }
 }
