@@ -33,8 +33,8 @@ public class CarInteract : MonoBehaviour, Interactables
     **/
     public void Awake()
     {
-        car.GetComponent<CarMovement>().enabled = false;
-        carCam.SetActive(false);
+        car.GetComponent<CarMovement>().enabled = true;
+        carCam.SetActive(true);
         textObject = GameObject.Find("DoorText");
         text = textObject.GetComponent<TMP_Text>();
     }
@@ -59,4 +59,4 @@ public class CarInteract : MonoBehaviour, Interactables
     }
 
 }
-    
+
