@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     {
         // this might not be right idk I'm trying something new
         // Idea is to delete itself if there is already another gamemanager in the scene
-        if (gm.gameObject == null)
+        if (gm == null || gm.gameObject == null)
         {
             gm = this;
         }
@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        gm = this;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -81,7 +82,7 @@ public class GameManager : MonoBehaviour
 
         yield return null;
 
-        if (sceneName != "Main Menu") OnLevelLoad();
+        // if (sceneName != "Main Menu") OnLevelLoad();
 
         //  Set volume
         // AudioListener.volume = volume;
@@ -99,8 +100,17 @@ public class GameManager : MonoBehaviour
     // Call when loop is finished
     public void Loop()
     {
-        storyNum++;
-        Load("Intro");
+        Load("Main Menu");
+        // if (SceneManager.GetActiveScene().name == "Level")
+        // {
+        //     storyNum++;
+        //     Load("Intro");
+
+        // }
+        // else
+        // {
+        //     Load("Level");
+        // }
         // Might be a good time to check if the story is over
     }
 

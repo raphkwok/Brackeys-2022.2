@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Intro/Intro.unity
+    guid: 90662c60b4277794b9357f00e4f20039
+  - enabled: 1
+    path: Assets/Scenes/Gas Station/Level.unity
+    guid: 870cdf72894f1ca4884efe50fdc988d4
   m_configObjects: {}

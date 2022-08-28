@@ -46,7 +46,8 @@ public class CarMovement : MonoBehaviour
         if (braking)
         {
             collider.brakeTorque = brakeStrength;
-        } else
+        }
+        else
         {
             collider.brakeTorque = 0f;
         }
@@ -54,7 +55,7 @@ public class CarMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+
         Steer();
         Accelerate();
         UpdateWheelPoses();
@@ -98,5 +99,28 @@ public class CarMovement : MonoBehaviour
 
         wheel.position = pos;
         wheel.rotation = quat * Quaternion.Euler(Vector3.right * 90f);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Finish")
+        {
+            GameManager.gm.Loop();
+        }
+        else if (other.gameObject.tag == "Death")
+        {
+            GameManager.gm.Death();
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Finish")
+        {
+            GameManager.gm.Loop();
+        }
+        else if (other.gameObject.tag == "Death")
+        {
+            GameManager.gm.Death();
+        }
     }
 }

@@ -18,6 +18,8 @@ public class MenuController : MonoBehaviour
 
     public void Play()
     {
+        print("bruh");
+
         GameManager.gm.Load("Intro");
     }
 

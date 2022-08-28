@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
+using UnityEngine.SceneManagement;
 public class CarInteract : MonoBehaviour, Interactables
 {
     public float MaxRange { get { return maxRange; } }
@@ -33,8 +34,16 @@ public class CarInteract : MonoBehaviour, Interactables
     **/
     public void Awake()
     {
-        car.GetComponent<CarMovement>().enabled = true;
-        carCam.SetActive(true);
+        if (SceneManager.GetActiveScene().name == "Intro")
+        {
+            car.GetComponent<CarMovement>().enabled = true;
+            carCam.SetActive(true);
+        }
+        else
+        {
+            car.GetComponent<CarMovement>().enabled = false;
+            carCam.SetActive(false);
+        }
         textObject = GameObject.Find("DoorText");
         text = textObject.GetComponent<TMP_Text>();
     }
@@ -55,7 +64,7 @@ public class CarInteract : MonoBehaviour, Interactables
 
     public void OnEndHover()
     {
-        text.color = Color32.Lerp(new Color32(225, 225, 225, 0), new Color32(225, 225, 225, 225), Time.deltaTime * fadeTime);
+        // text.color = Color32.Lerp(new Color32(225, 225, 225, 0), new Color32(225, 225, 225, 225), Time.deltaTime * fadeTime);
     }
 
 }
